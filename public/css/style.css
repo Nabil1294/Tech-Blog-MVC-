@@ -1,24 +1,70 @@
-header, .project:not(:last-child) {
-  border-bottom: 1px solid #ccc;
-}
-
-.no-button {
-  background: none;
-  border: none;
+body, html {
+  height: 100%;
+  margin: 0;
   padding: 0;
-  cursor: pointer;
-  color: #1b89bc;
-  text-decoration: none;
-  font-size: 100%;
+  background-image: url('../css/photo-1432821596592-e2c18b78144f.avif');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
 }
 
-.no-button:hover {
-  color: #065b83;
-  text-decoration: underline;
+.title1 {
+  margin-left: 5rem;
+  transform: rotate(-32deg);
+  transform-origin: center;
+  display: inline-block;
 }
 
-.dollar-amount {
-  color: #056605;
-  font-weight: bold;
-  margin-left: -5px;
+.margins {
+  margin: 3rem 3rem;
+}
+
+
+.login-form-container {
+  max-width: 320px; 
+  margin: 0 auto; 
+}
+
+.input-small {
+  width: 100%; 
+  max-width: 180px; 
+  display: block; 
+  margin: 0 auto; 
+}
+
+.scrollable-card {
+  max-height: 400px; 
+  overflow-y: auto;
+}
+
+
+.card-custom {
+    background-color: rgba(226, 219, 219, 0.9); 
+    border: 1px solid rgba(75, 73, 73, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    color: #333;
+    border-radius: 0.3rem;
+    padding: 1rem;
+}
+
+.card-custom .card-title {
+    color: #5a3e36;
+    margin-left: 1rem;
+
+}
+
+.card-custom .card-text {
+    color: #4a4a4a; 
+    margin-left: 1rem;
+}
+
+.card-custom small {
+    color: #6c757d; 
+}
+
+
+
+.row, .col-md-4 {
+  width: 100%;
 }

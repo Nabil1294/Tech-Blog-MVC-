@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        {{#each blogs as |blog|}}
+            <div class="col-md-8 col-lg-6 mb-4">
+                <div class="card-custom">
+    <div class="card-body">
+        <h5 class="card-title">{{blog.title}}</h5>
+        <p class="card-text">{{blog.description}}</p>
+        <p class="card-text">
+            <small class="text-muted">Posted on {{format_date blog.date_created}}</small>
+        </p>
+    </div>
+    </div>
+            </div>
+        {{else}}
+            <p>No blogs found.</p>
+        {{/each}}
+    </div>
+</div>
