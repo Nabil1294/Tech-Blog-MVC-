@@ -1,0 +1,40 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 mb-4">
+            <div class="card-custom">
+                <div class="card-body">
+                    {{#if logged_in}}
+                    <h5 class="card-title">{{blog.title}}</h5>
+                    {{else}}
+                    <h5 class="card-title"><a href="/login">{{blog.title}}</a></h5>
+                    {{/if}}
+                    <p class="card-text">{{blog.description}}</p>
+                    <p class="card-text">
+                        <small class="text-muted">Posted by {{blog.user.username}} on {{format_date blog.date_created}}</small>
+                    </p>
+
+                    <!-- Comments Section -->
+                    {{#each blog.comments as |comment|}}
+                    <div class="comment mb-3">
+                        <p>{{comment.comment_description}}</p>
+                        <p>
+                            <small class="text-muted">Comment by {{comment.user.username}} on {{format_date comment.date_created}}</small>
+                        </p>
+                    </div>
+                    {{/each}}
+
+                    <!-- Add Comment Form -->
+                    <h6 class="mt-4">Leave a Comment:</h6>
+                    <form id="new-comment-form" class="mb-4">
+                        <div class="form-group mb-3">
+                            <textarea id="comment-description" class="form-control" rows="3" placeholder="Your comment" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/comment.js"></script>

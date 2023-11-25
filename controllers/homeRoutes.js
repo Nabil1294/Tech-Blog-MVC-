@@ -6,9 +6,12 @@ router.get('/', async (req, res) => {
   try {
     const blogData = await Blog.findAll({
       include: [{
+        model: Comment,
+        include: [{ model: User, attributes: ['username'] }]
+      }, {
         model: User,
-        attributes: ['username'],
-      },],
+        attributes: ['username']
+      }]
     });
 
     const blogs = blogData.map((blog) => blog.get({
@@ -24,58 +27,61 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/blog/:id', async (req, res) => {
+router.get('/blog/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
           model: User,
-          attributes: ['username'],
-        }, {
+          attributes: ['username']
+        },
+        {
           model: Comment,
-          include: [
-            User
-          ]
+          include: [User]
         }
-      ],
+      ]
     });
 
-    const blog = blogData.get({
-      plain: true
-    });
-
-    res.render('blog', {
-      ...blog,
-      logged_in: req.session.logged_in
-    });
+    if (blogData) {
+      const blog = blogData.get({ plain: true });
+      res.render('blog-details', {
+        blog,
+        logged_in: req.session.logged_in
+      });
+    } else {
+      res.status(404).send('Blog post not found');
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
-      attributes: {
-        exclude: ['password']
-      },
+      attributes: { exclude: ['password'] },
       include: [{
-        model: Blog
+        model: Blog,
+        include: [{
+          model: Comment,
+          include: [{ model: User, attributes: ['username'] }]
+        }]
       }],
     });
 
-    const user = userData.get({
-      plain: true
-    });
+    const user = userData.get({ plain: true });
 
     res.render('dashboard', {
       ...user,
       logged_in: true
     });
   } catch (err) {
+    console.error(err); // Log the error for debugging
     res.status(500).json(err);
   }
 });
+
 
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {

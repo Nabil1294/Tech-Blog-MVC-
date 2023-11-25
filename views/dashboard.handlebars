@@ -1,23 +1,43 @@
 <div class="container mt-4">
-    <h2 class="title1">My Blogs</h2>
     <div class="container mt-4">
         <div class="row justify-content-center">
             {{#each blogs as |blog|}}
                 <div class="col-md-8 col-lg-6 mb-4">
                     <div class="card-custom">
                         <div class="card-body">
-                            <h5 class="card-title">{{blog.title}}</h5>
+                            <h5 class="card-title">
+                                <a href="/blog/{{blog.id}}" class="blog-title-link">{{blog.title}}
+                                <i class="fas fa-comments"></i>
+                                </a>
+                            </h5>
                             <p class="card-text">{{blog.description}}</p>
                             <p class="card-text">
                                 <small class="text-muted">Posted on {{format_date blog.date_created}}</small>
                             </p>
-                            <!-- Update Button -->
-                            <button class="btn btn-primary btn-sm custom-update-btn" onclick="editBlogPost('{{blog.id}}')">
-                            <i class="bi bi-pencil-fill"></i>
+
+                            {{#if blog.comments}}
+                            <button class="btn btn-info btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#commentsCollapse{{blog.id}}" aria-expanded="false" aria-controls="commentsCollapse">
+                                Comments
                             </button>
-                            <!-- Delete Button -->
+
+                            <div class="collapse comments-section" id="commentsCollapse{{blog.id}}">
+                                {{#each blog.comments as |comment|}}
+                                <div class="comment mt-2">
+                                    <p class="comment-text">{{comment.comment_description}}</p>
+                                    <p class="comment-meta">
+                                        <small class="text-muted">Comment by {{comment.user.username}} on {{format_date comment.date_created}}</small>
+                                    </p>
+                                </div>
+                                {{/each}}
+                            </div>
+                            {{/if}}
+
+                            
+                            <button class="btn btn-primary btn-sm custom-update-btn" onclick="editBlogPost('{{blog.id}}')">
+                                <i class="bi bi-pencil-fill"></i>
+                            </button>
                             <button class="btn btn-danger btn-sm custom-delete-btn" onclick="requestDeletePost(this)" data-id="{{blog.id}}">
-                            <i class="bi bi-trash-fill"></i>
+                                <i class="bi bi-trash-fill"></i>
                             </button>
                         </div>
                     </div>
@@ -47,3 +67,4 @@
 
 <script src="./js/updateDelete.js"></script>
 <script src="./js/blog.js"></script>
+
