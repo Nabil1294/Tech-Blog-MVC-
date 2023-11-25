@@ -94,4 +94,29 @@ router.get('/signUp', (req, res) => {
   res.render('signUp');
 });
 
+router.get('/create-blog/:id?', withAuth, async (req, res) => {
+  try {
+    let blog = null;
+    if (req.params.id) {
+      // Fetch the blog data for editing
+      const blogData = await Blog.findByPk(req.params.id, {
+        include: [User]
+      });
+
+      blog = blogData ? blogData.get({ plain: true }) : null;
+    }
+
+    res.render('blog', {
+      blog,
+      editing: !!req.params.id,
+      logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
+
+
 module.exports = router;

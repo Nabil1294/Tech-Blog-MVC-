@@ -1,83 +1,45 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {{#if editing}}
+            <h2 class="mb-4">Edit Blog Post</h2>
+            {{else}}
+            <h2 class="mb-4">Create a New Blog Post</h2>
+            {{/if}}
+            <form id="new-blog-form" action="/api/blogs" method="POST">
+                <div class="mb-3">
+                    <label for="blog-title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="blog-title" name="title" value="{{blog.title}}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="blog-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="blog-description" name="description" rows="4">{{blog.description}}</textarea>
+                </div>
+                
+                <input type="hidden" id="blog-id" name="id" value="{{blog.id}}">
+                <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary">{{#if editing}}Update{{else}}Submit{{/if}}</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-<section class="margins">
-    <div class="text-center mt-4">
-        <button type="button" id="submitbtn" class="btn btn-lg btn-dark">Submit</button>
-    </div>
-    <div class="row item">
-        <!-- Left Side (Ingredients and Title Area) -->
-        <div class="col-md-4 p-2">
-            <div class="box card-body bg-light rounded shadow box1">
-                <!-- Title Input -->
-                <div class="mb-3">
-                    <input type="text" class="form-control form-control-md" style="width: 300px;" placeholder="Title" id="title">
-                </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control form-control-md" style="width: 300px;" placeholder="Ingredient" id="ingredient">
-                </div>
-                <!-- Quantity and Unit Row -->
-                <div class="mb-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-md" placeholder="Quantity" id="quantity">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary dropdown-toggle" aria-haspopup="true" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="unit">
-                                Unit
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="unit">
-                                <li><a class="dropdown-item" id="unit-N/A" href="#">N/A</a></li>
-        <li><a class="dropdown-item" id="unit-tbsp" href="#">tbsp</a></li>
-            <li><a class="dropdown-item" id="unit-tsp" href="#">tsp</a></li>
-                <li><a class="dropdown-item" id="unit-c" href="#">c</a></li>
-                    <li><a class="dropdown-item" id="unit-oz" href="#">oz</a></li>
-                        <li><a class="dropdown-item" id="unit-lb" href="#">lb</a></li>
-                            <li><a class="dropdown-item" id="unit-g" href="#">g</a></li>
-                                <li><a class="dropdown-item" id="unit-kg" href="#">kg</a></li>
-                                    <li><a class="dropdown-item" id="unit-ml" href="#">ml</a></li>
-                                        <li><a class="dropdown-item" id="unit-L" href="#">L</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Ingredient Area -->
-                <div>
-                    <button type="button" id="ingbutton" class="btn btn-dark">Add</button>
-                </div>
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Attention</h5>
+                <button type="button" id="close-button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- Ingredient Display Area -->
-            <div class="box card-body bg-primary rounded shadow-lg box1 mt-3">
-                <div class="card-body bg-white item">
-                    <ul id="ingdisplay" class = 'item'>
-                        <li>Ingredients go here on submit</li>
-                    </ul>
-                </div>
+            <div class="modal-body" id="modal-text">
             </div>
-        </div>
-
-        <!-- Left Side (Instructions Area) -->
-        <div class="col-md-8 p-2">
-            <div class="box card-body bg-primary rounded shadow box2 item">
-                <div class="mb-3">
-                    <textarea id="instructions" class="form-control item" placeholder="Add Instructions Here"  style="height: 70vh;"></textarea>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Attention</h5>
-                    <button type="button" id="close-button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modal-text">
-                </div>
-                <div class="modal-footer">
-                    <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </section>
 
+<script src="/js/blog.js"></script>
 
-
-<script src="./js/newRecipe.js"></script>

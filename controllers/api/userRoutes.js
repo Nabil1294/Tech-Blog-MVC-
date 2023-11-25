@@ -3,16 +3,32 @@ const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    // Check if user already exists
+    const existingUser = await User.findOne({
+      where: { username: req.body.username }
+    });
+
+    if (existingUser) {
+      // User already exists, send a conflict response
+      return res.status(409).json({ message: 'User already exists.' });
+    }
+
+    // If user does not exist, create a new user
+    const userData = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+    });
 
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
 
-      res.status(200).json(userData);
+      // Redirect to the profile page
+      res.redirect('/');
     });
   } catch (err) {
-    res.status(400).json(err);
+    console.error(err);
+    res.status(500).json({ message: 'Password must be atleast 8 characters.' });
   }
 });
 
