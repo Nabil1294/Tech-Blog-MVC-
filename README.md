@@ -99,7 +99,7 @@ node server.js
 ![example-8 delete](./Assets/delete.png)
 
 ## Deployed Github link
-
+ https://nabil1294.github.io/Tech-Blog-MVC-/
 
 ## Deployed Heroku link
  https://dry-harbor-91556-2dc18a24500f.herokuapp.com/
